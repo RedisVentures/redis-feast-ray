@@ -9,6 +9,11 @@ This repo shows an end to end Machine Learning pipeline that uses
  
 ![RayRedis_Feast](https://user-images.githubusercontent.com/13009163/186022617-577f212f-1ee9-466a-9cd9-039dcc241a2b.png)
 
+### Citations
+
+This demo pulls heavily from the following examples
+ - [This Feast/Ray demo by Jules Damji](https://github.com/dmatrix/feast_workshops/tree/master/module_3)
+ - [AWS Feast credit-scoring demo](https://github.com/feast-dev/feast-aws-credit-scoring-tutorial)
 
 ### Getting Started
 
@@ -221,8 +226,3 @@ make test-infer
 If this works, ``Approved!`` should be printed to the terminal.
 
 
-### Related works
-
-This demo pulls from the following examples
- - [AWS feast credit-scoring demo](https://github.com/feast-dev/feast-aws-credit-scoring-tutorial)
- - [This feast demo adapted by Jules Damji](https://github.com/dmatrix/feast_workshops/tree/master/module_3)
