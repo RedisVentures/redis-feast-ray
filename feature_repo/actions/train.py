@@ -65,6 +65,7 @@ class CreditXGBClassifier:
         return self._train_X
 
     def save(self, file_path: str, file_name: str):
+        # NOTE: using pickle in production is not recommended for security reasons
         if not self.trained_model:
             raise Exception("Model has not been trained yet")
         with open(Path(file_path) / file_name, "wb") as f:
@@ -137,10 +138,6 @@ if __name__ == '__main__':
     store = FeatureStore(repo_path=REPO_PATH)
     fetcher = DataFetcher(store, REPO_PATH)
     xgboost_cls = CreditXGBClassifier(store, fetcher)
-
-    #pd.set_option('display.max_columns', 50)
-    #print(xgboost_cls.training_df.head(3))
-    #print(type(xgboost_cls.model))
 
     start = time.time()
     # Train the model

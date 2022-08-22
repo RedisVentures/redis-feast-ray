@@ -8,7 +8,7 @@ MAKEFLAGS += --no-print-directory
 
 SHELL:=/bin/bash
 
-# help: help                           - display this makefile's help information
+# help: help                      - display this makefile's help information
 .PHONY: help
 help:
 	@grep "^# help\:" Makefile | grep -v grep | sed 's/\# help\: //' | sed 's/\# help\://'
@@ -17,32 +17,48 @@ help:
 # help: Feature Store
 # help: -------------
 
-# help: init-fs                        - intialize the Feast feature store with Redis
+# help: init-fs                   - intialize the Feast feature store with Redis
 .PHONY: init-fs
 init-fs:
 	@rm -rf ./data/registry.db
-	@cd actions && python create_feature_repo.py
+	@cd actions && python create_feature_store.py
 
-# help: test-fs                        - Test feature retrieval
+# help: test-fs                   - Test feature retrieval
 .PHONY: test-fs
 test-fs:
-	@cd utils && python data-fetcher.py
+	@cd utils && python data_fetcher.py
 
 
 # help:
-# help: train
+# help: Train
 # help: ----
 
-# help: train                          - Train on a single node w/o Ray
+# help: train                     - Train on a single node w/o Ray
 .PHONY: train
 train:
 	@cd actions && python train.py
 
 
-# help: train-ray                      - Train distributed with Ray
+# help: train-ray                 - Train distributed with Ray
 .PHONY: train-ray
 train-ray:
 	@cd actions && python train_w_ray_distributed.py
+
+
+# help:
+# help: Infer
+# help: -----
+
+# help: serve                     - Serve trained XGBoost model with Ray Serve
+.PHONY: serve
+serve:
+	@cd actions && python serve.py
+
+
+# help: test-infer                - Test the inference pipeline for a sample loan request
+.PHONY: test-infer
+test-infer:
+	@cd utils && python test.py
 
 
 

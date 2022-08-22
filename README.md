@@ -1,10 +1,10 @@
 ## Ray + Feast + Redis: Credit Scoring Demo
 
-This repo shows an end to end Machine Learning Pipeline that uses
+This repo shows an end to end Machine Learning pipeline that uses
  - Feast to orchestrate data movement and feature registry
  - Redis to serve features
  - Ray to perform distributed training with XGBoost
- - Ray Serve to serve the trained XGBoost model
+ - Ray Serve + FastAPI to serve the trained XGBoost model
 
 ### Getting Started
 
@@ -18,6 +18,32 @@ Prerequisites:
       - (cloud) Free instance on [Redis.com](https://redis.com/try-free/)
  - A python virtual environment
  - A running ray cluster (optional as the script can also spin one up)
+
+A makefile is provided that is meant to assist with setting up the
+workflow. Below is the help output obtained by running ``make``.
+Note: ``Make`` must be installed to use the makefile.
+
+```text
+Ray/Redis/Feast Demo Makefile help
+
+help                      - display this makefile's help information
+
+Feature Store
+-------------
+init-fs                   - intialize the Feast feature store with Redis
+test-fs                   - Test feature retrieval
+
+Train
+----
+train                     - Train on a single node w/o Ray
+train-ray                 - Train distributed with Ray
+
+Infer
+-----
+serve                     - Serve trained XGBoost model with Ray Serve
+test-infer                - Test the inference pipeline for a sample loan request
+
+```
 
 ### Step 1: Install Python requirements
 
@@ -40,7 +66,7 @@ if it's not running and you installed it locally, start it with
 ```bash
 redis-server --port <port> --protected-mode no --requirepass <password> --bind 0.0.0.0
 ```
-Note: this is not how you should run Redis in production.
+Note: this is usually not how you should run Redis in production.
 
 ### Step 3: Register and upload features to Redis
 
@@ -83,6 +109,9 @@ To run single node training:
 ```bash
 make train
 ```
+
+This should spin up a ray cluster (single worker) on whatever system you
+launched the workflow on if there is no pre-existing cluster setup.
 
 ### Step 5b: Train with Ray
 
@@ -141,3 +170,30 @@ ex. of port forwarding
 # from laptop
 ssh -L 8888:localhost:8888 <username>@<hostname of where feast server is running>
 ```
+
+
+### Step 7: Serve the trained XGBoost model
+
+To serve the trained XGBoost model with Ray Serve, there is a
+script within the ``actions`` directory named ``serve.py``. This
+model pulls features from the online feature store, Redis, which
+is coordinated by Redis.
+
+The ``LoanModel`` class is a FastAPI application served by Ray.
+Similar to training, make sure ``RAY_ADDRESS`` is set if you
+are using a pre-existing cluster.
+
+To serve the model you can run:
+
+```bash
+make serve
+```
+
+To test the inference serving pipeline with a sample loan request,
+run the following command:
+
+```bash
+make test-infer
+```
+
+
