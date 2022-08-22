@@ -1,10 +1,14 @@
-## Ray + Feast + Redis: Credit Scoring Demo
+## Ray + Feast + Redis: Loan Request Prediction Demo
 
 This repo shows an end to end Machine Learning pipeline that uses
  - Feast to orchestrate data movement and feature registry
  - Redis to serve features
  - Ray to perform distributed training with XGBoost
  - Ray Serve + FastAPI to serve the trained XGBoost model
+ 
+ 
+![RayRedis_Feast](https://user-images.githubusercontent.com/13009163/186022617-577f212f-1ee9-466a-9cd9-039dcc241a2b.png)
+
 
 ### Getting Started
 
@@ -87,6 +91,9 @@ Then, to initialize the feature store you can run
 ```bash
 make init-fs
 ```
+Assuming everything in the yaml is correct, this should look like:
+
+![feature-loading](https://user-images.githubusercontent.com/13009163/186022733-b9b018b8-1fcb-4729-aefb-a6a6fc96547a.png)
 
 ### Step 4: Test Feature Retrieval
 
@@ -122,6 +129,8 @@ you can run
 make train-ray
 ```
 
+This should output a ``credit_model_xgb.pkl`` object in the ``data`` directory.
+
 ### Step 5c: Train with Remote Ray Cluster
 
 Before training with Ray ensure you're Ray cluster is setup
@@ -140,11 +149,20 @@ and then run
 make train-ray
 ```
 
+Like 5b, this should output a ``credit_model_xgb.pkl`` object in the ``data`` directory.
+
 ### Step 6a: (optional) View Ray Dashboard
+
+The dashboard has informative views on ray workers as well as logs which
+can be very helpful.
+
+<img width="1602" alt="new-dash" src="https://user-images.githubusercontent.com/13009163/186023058-ad9e98f1-a637-4bd3-bd10-7017ac8a7c7d.png">
+
 
 The ray dashboard is located at localhost:8265 which can be port
 forwarded back to your laptop through SSH if your ray cluster is running
-on a remote system like mine was.
+on a remote system like mine was. Note, this will not be visible unless
+you have a Ray cluster running.
 
 ex. of port forwarding
 
@@ -155,9 +173,15 @@ ssh -L 8265:localhost:8265 <username>@<hostname of ray head node>
 
 ### Step 6b: (optional) View Feast Dashboard
 
+The feast dashboard shows feature views, services, and data sources which help
+orchcestrate the data movement of features. 
+
+<img width="1239" alt="feature-service" src="https://user-images.githubusercontent.com/13009163/186023287-8aff1e6c-10a0-4be6-8dbb-ec9cf4aa9da1.png">
+
 Similar to Ray, the Feast dashboard is located at localhost:8888 which can be port
 forwarded back to your laptop through SSH if your ray cluster is running
 on a remote system like mine was.
+
 
 ```bash
 # with python environment active
@@ -165,12 +189,10 @@ feast ui
 ```
 
 ex. of port forwarding
-
 ```bash
 # from laptop
 ssh -L 8888:localhost:8888 <username>@<hostname of where feast server is running>
 ```
-
 
 ### Step 7: Serve the trained XGBoost model
 
@@ -196,4 +218,11 @@ run the following command:
 make test-infer
 ```
 
+If this works, ``Approved!`` should be printed to the terminal.
 
+
+### Related works
+
+This demo pulls from the following examples
+ - [AWS feast credit-scoring demo](https://github.com/feast-dev/feast-aws-credit-scoring-tutorial)
+ - [This feast demo adapted by Jules Damji](https://github.com/dmatrix/feast_workshops/tree/master/module_3)
