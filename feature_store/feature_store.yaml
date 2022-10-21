@@ -1,8 +1,8 @@
-project: feature_repo
+project: feature_store
 registry: data/registry.db
 provider: local
 online_store:
   type: redis
   redis_type: redis
-  connection_string: "10.0.0.7:6780,password=hello"
+  connection_string: "redis:6379,password=hello"
 entity_key_serialization_version: 2

@@ -79,9 +79,9 @@ Note: this is usually not how you should run Redis in production.
 
 ### Step 3: Register and upload features to Redis
 
-Edit the feature_store.yaml in the ``feature_repo`` directory
+Edit the feature_store.yaml in the ``feature_store`` directory
 ```bash
-project: feature_repo
+project: feature_store
 registry: data/registry.db
 provider: local
 online_store:
@@ -147,7 +147,7 @@ EXPORT RAY_ADDRESS=<address of Ray head node>:<ray head port>
 ```
 Ensure the values for ``RAY_ACTORS``, and ``RAY_CPU_PER_ACTOR``
 are set appropriately in the top of the ``train_w_ray_distribtuted.py``
-file in ``feature_repo/actions``
+file in ``feature_store/actions``
 
 and then run
 ```bash

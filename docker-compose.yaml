@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  redis:
+    image: redis/redis-stack:latest
+    platform: linux/amd64
+    volumes:
+      - ./redis:/data/
+    ports:
+      - 6379:6379
+      - 8001:8001
+  ray-feast:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./feature_store:./
+    ports:
+      - 8888:8888
+      - 8265:8265
+      - 8000:8000
+

@@ -10,7 +10,7 @@ from feast import FeatureStore
 from sklearn.model_selection import train_test_split
 from xgboost_ray import RayXGBClassifier, RayParams, train, RayDMatrix
 
-# add feature_repo path to PYTHONPATH
+# add feature_store path to PYTHONPATH
 sys.path.insert(0, "../")
 
 from utils.data_fetcher import DataFetcher
