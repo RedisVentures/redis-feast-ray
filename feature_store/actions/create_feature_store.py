@@ -1,5 +1,9 @@
 import sys
 sys.path.insert(0, "../")
+
+import warnings
+warnings.filterwarnings("ignore")
+
 import os.path as osp
 from datetime import datetime
 from pathlib import Path

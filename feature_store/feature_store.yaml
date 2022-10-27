@@ -4,5 +4,5 @@ provider: local
 online_store:
   type: redis
   redis_type: redis
-  connection_string: "redis:6379,password=hello"
+  connection_string: "localhost:6379"
 entity_key_serialization_version: 2

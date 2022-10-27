@@ -1,4 +1,4 @@
-feast
+feast==0.23.2
 ray > 1.5
 xgboost
 redis
