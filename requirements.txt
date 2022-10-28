@@ -1,5 +1,5 @@
 feast==0.23.2
-ray > 1.5
+ray==1.10.0
 xgboost
 redis
 mlflow
@@ -7,3 +7,4 @@ sklearn
 xgboost_ray
 jupyterlab
 pyinstrument >= 3.4
+aiorwlock==1.3.0

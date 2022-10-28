@@ -12,7 +12,7 @@ from ray import serve
 from pathlib import Path
 from fastapi import FastAPI
 from dataclasses import dataclass
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from sklearn.preprocessing import OrdinalEncoder
 from xgboost_ray import RayParams, RayDMatrix
 
@@ -27,7 +27,7 @@ if REMOTE_RAY:
     ray.init(address='auto', namespace="serve", _redis_password="hello")
 
 app = FastAPI()
-serve.start(detached=True)
+serve.start(detached=True, http_options={"host": "0.0.0.0"})
 
 
 # replicated from schema.py to avoid import troubles
@@ -134,5 +134,5 @@ class LoanModel:
 
 # Deploy
 LoanModel.options(
-    ray_actor_options={"runtime_env": {"pip": ["feast", "xgboost", "pandas"]}}
+    ray_actor_options={"runtime_env": {"pip": ["ray[default]", "feast", "xgboost", "pandas"]}}
 ).deploy()

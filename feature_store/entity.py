@@ -1,13 +1,13 @@
-from feast import Entity, ValueType
+from feast import Entity
 
 zipcode = Entity(
     name="zipcode",
-    value_type=ValueType.INT64,
+    join_keys=["zipcode"],
     description="Zipcode for the loan origin"
 )
 
 dob_ssn = Entity(
     name="dob_ssn",
-    value_type=ValueType.STRING,
+    join_keys=["dob_ssn"],
     description="Date of birth and last four digits of social security number"
 )
