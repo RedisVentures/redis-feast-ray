@@ -22,5 +22,7 @@ services:
       - 8000:8000
     depends_on:
       - redis
+    environment:
+      RAY_BACKEND_LOG_LEVEL: "debug"
     command: /bin/bash
 

@@ -133,6 +133,4 @@ class LoanModel:
 
 
 # Deploy
-LoanModel.options(
-    ray_actor_options={"runtime_env": {"pip": ["ray[default]", "feast", "xgboost", "pandas"]}}
-).deploy()
+LoanModel.deploy()
